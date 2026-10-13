@@ -1,0 +1,287 @@
+{
+ "version": 1,
+ "notes": [
+  "<b>Bi-set:</b> dois exercícios seguidos sem pausa (troca rápida de aparelho), descanso só depois do par. Pares escolhidos entre músculos antagonistas (peito/costas, quadríceps/posterior, bíceps/tríceps) ou que não competem entre si, para manter a carga alta e economizar tempo.",
+  "<b>Rest-pause:</b> usado em apenas 1 bloco por treino, no isolador final do grupo, em substituição ao Myo-reps. Série até 1-2 reps da falha, 15s de pausa, mais reps, 15s, mais reps.",
+  "<b>Duração estimada:</b> 45-55 min por treino (contra cerca de 75 min em séries tradicionais). Compostos pesados nunca vão à falha.",
+  "<b>Frequência:</b> Full Body 3x/semana (Seg/Qua/Sex), mínimo de 1 dia de descanso entre sessões."
+ ],
+ "tabs": [
+  {
+   "id": "A",
+   "label": "Treino A",
+   "subtitle": "Full Body — Segunda",
+   "blocks": [
+    {
+     "kind": "biset",
+     "title": "Bi-set 1 — Pernas",
+     "rest": "90s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Leg press 45°",
+       "target": "3x8-10",
+       "load": ""
+      },
+      {
+       "name": "Mesa flexora",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 2 — Peito + Costas",
+     "rest": "75s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Supino inclinado com halteres",
+       "target": "3x8-12",
+       "load": ""
+      },
+      {
+       "name": "Puxada frente pegada aberta",
+       "target": "3x8-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 3 — Ombro + Panturrilha",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Elevação lateral polia baixa",
+       "target": "3x12-15",
+       "load": ""
+      },
+      {
+       "name": "Panturrilha sentada",
+       "target": "3x12-15",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 4 — Braços",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Rosca direta barra W",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Tríceps corda no pulley",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "single",
+     "title": "Finalizador — Core",
+     "rest": "45s entre séries",
+     "note": "",
+     "exercises": [
+      {
+       "name": "Prancha isométrica",
+       "target": "3x30-45s",
+       "load": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "Treino B",
+   "subtitle": "Full Body — Quarta",
+   "blocks": [
+    {
+     "kind": "biset",
+     "title": "Bi-set 1 — Posterior + Peito",
+     "rest": "90s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Stiff com halteres",
+       "target": "3x8-10",
+       "load": ""
+      },
+      {
+       "name": "Supino reto com halteres",
+       "target": "3x8-10",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 2 — Costas + Ombro",
+     "rest": "75s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Remada baixa no cabo",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Desenvolvimento com halteres",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 3 — Braços",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Rosca martelo com halteres",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Tríceps pulley barra reta",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 4 — Quadríceps + Ombro posterior",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries. Na extensora, a 3ª série é em rest-pause.",
+     "exercises": [
+      {
+       "name": "Cadeira extensora",
+       "target": "2x12-15 + 1 rest-pause",
+       "load": ""
+      },
+      {
+       "name": "Crucifixo invertido no pec deck",
+       "target": "3x12-15",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "single",
+     "title": "Finalizador — Core",
+     "rest": "45s entre séries",
+     "note": "",
+     "exercises": [
+      {
+       "name": "Abdominal supra na polia",
+       "target": "3x12-15",
+       "load": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "Treino C",
+   "subtitle": "Full Body — Sexta",
+   "blocks": [
+    {
+     "kind": "biset",
+     "title": "Bi-set 1 — Pernas + Costas",
+     "rest": "90s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Agachamento sumô no crossover",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Remada unilateral (serrote)",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 2 — Peito + Costas",
+     "rest": "75s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Crossover no cabo",
+       "target": "3x12-15",
+       "load": ""
+      },
+      {
+       "name": "Puxada unilateral polia alta",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 3 — Posterior + Panturrilha",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Cadeira flexora",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Panturrilha no leg press",
+       "target": "3x12-15",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "biset",
+     "title": "Bi-set 4 — Braços",
+     "rest": "60s após o par",
+     "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.",
+     "exercises": [
+      {
+       "name": "Rosca inclinada com halteres",
+       "target": "3x10-12",
+       "load": ""
+      },
+      {
+       "name": "Tríceps francês no cabo",
+       "target": "3x10-12",
+       "load": ""
+      }
+     ]
+    },
+    {
+     "kind": "restpause",
+     "title": "Finalizador — Ombros (rest-pause)",
+     "rest": "2 min entre séries",
+     "note": "Rest-pause: série até 1-2 reps da falha, 15s de pausa, +reps, 15s, +reps. Use uma só vez por grupo muscular.",
+     "exercises": [
+      {
+       "name": "Elevação lateral com halteres",
+       "target": "2 séries rest-pause",
+       "load": ""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+COMO INSTALAR NO ANDROID (Treino Jefrei)
+
+1) Publicar (uma vez só)
+   - Acesse https://app.netlify.com/drop no computador (crie conta gratuita para o link não expirar).
+   - Arraste a PASTA descompactada deste app para a página. O Netlify devolve um endereço https://....netlify.app
+   - (Alternativa: GitHub Pages, enviando estes arquivos para um repositório.)
+
+2) Instalar no celular
+   - Abra o endereço no Chrome do Android.
+   - Menu (3 pontinhos) > "Instalar app" ou "Adicionar à tela inicial". O ícone aparece como um app.
+   - Funciona offline depois da primeira abertura.
+
+3) Atualizar o treino
+   - Peça o novo treino no chat. Eu devolvo um plano.json com a versão maior (ex.: 2).
+   - Substitua o plano.json na pasta e arraste a pasta de novo no Netlify (mesmo site: Deploys > arrastar).
+   - Ao abrir o app com internet, ele baixa o novo treino sozinho e mantém as cargas e o histórico.
+   - Sem hospedagem: use Ajustes > Importar backup com um arquivo .json que eu enviar.
+
+4) Backup
+   - Ajustes > Exportar backup. Guarde o arquivo no Drive ou WhatsApp.

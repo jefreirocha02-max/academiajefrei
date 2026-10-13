@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Treino Jefrei</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--card2:#1e222b;--border:#2a2f3a;--text:#eef1f6;--muted:#9aa3b2;--accent:#4f7cff;--ok:#2fbf71;--rp:#f5a623;--bs:#4f9dff;--danger:#e5484d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 14px 8px}
+h1{font-size:1.05rem;margin:0}
+.sub{color:var(--muted);font-size:.78rem;margin:2px 0 8px}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px 10px;font-size:.8rem}
+.stat b{color:var(--ok);font-size:.95rem}
+#rest{display:none;background:#2a2313;border:1px solid var(--rp);color:#ffd48a;border-radius:10px;padding:8px 10px;font-size:.82rem;margin-bottom:8px;justify-content:space-between;gap:8px;align-items:center}
+#rest.show{display:flex}
+nav.tabs{display:flex;gap:8px;overflow-x:auto}
+nav.tabs button{flex:0 0 auto;background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:9px 14px;border-radius:10px;font-weight:600;font-size:.85rem}
+nav.tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+main{max-width:720px;margin:0 auto;padding:12px}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:600;font-size:.85rem}
+.btn.sec{background:var(--card2);border:1px solid var(--border);color:var(--text)}
+.btn.sm{padding:6px 10px;font-size:.75rem}
+.btn.dng{background:var(--danger)}
+.notes{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.notes b{color:var(--text)} .notes p{margin:6px 0 0} summary{color:var(--text);font-weight:600;font-size:.85rem}
+.warn{background:linear-gradient(90deg,#2a1830,#231326);border:1px solid var(--accent);color:#f3c9e6;border-radius:12px;padding:10px 12px;font-size:.78rem;line-height:1.5;margin-bottom:12px}
+.block{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.bh{display:flex;align-items:center;gap:8px;padding:9px 10px;background:var(--card2);border-bottom:1px solid var(--border)}
+.bh input{flex:1;background:transparent;border:0;color:var(--text);font-weight:700;font-size:.85rem;min-width:0}
+.badge{font-size:.62rem;font-weight:800;border-radius:6px;padding:3px 7px;color:#06121f;background:var(--bs);border:0;letter-spacing:.3px}
+.badge.restpause{background:var(--rp);color:#241900}.badge.single{background:#8b94a5}
+.bmeta{padding:6px 12px 0;font-size:.74rem;color:var(--muted)}
+.bmeta input{background:transparent;border:0;color:var(--muted);width:100%;font-size:.74rem;padding:2px 0}
+.ex{padding:10px 12px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:30px 1fr;gap:6px 8px;align-items:center}
+.ex:last-of-type{border-bottom:0}
+.lbl{font-weight:800;color:var(--bs);font-size:.85rem;text-align:center}
+input.t{background:#11141a;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;font-size:.88rem;width:100%}
+.row2{grid-column:2;display:flex;gap:6px;align-items:center}
+.row2 .tg{flex:1;min-width:0}.row2 .ld{width:84px;text-align:center}
+.ib{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;width:36px;height:36px;font-size:.95rem;text-decoration:none;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.ib.rm{color:var(--danger);border-color:#4a2323}
+.add{display:block;width:calc(100% - 24px);margin:10px 12px 12px;background:none;border:1px dashed var(--border);color:var(--muted);border-radius:10px;padding:9px;font-size:.8rem}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--border);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.bar .reg{width:100%;margin-bottom:8px;padding:13px;font-size:.95rem;background:var(--ok);color:#04210f}
+.menu{display:flex;gap:6px}.menu button{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:9px 4px;font-size:.78rem;font-weight:600}
+.menu button.active{color:#fff;border-color:var(--accent)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0}
+.cal .h{font-size:.68rem;color:var(--muted);text-align:center}
+.cal .d{aspect-ratio:1;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.78rem}
+.cal .d.on{background:var(--ok);color:#04210f;font-weight:800;border-color:var(--ok)}
+.cal .d.td{outline:2px solid var(--accent)}
+.cal .d small{font-size:.58rem;font-weight:700}
+.li{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:6px;font-size:.84rem}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.ov.show{display:flex}
+.sheet{background:var(--card);border-radius:18px 18px 0 0;width:100%;max-width:560px;padding:18px 16px calc(18px + env(safe-area-inset-bottom));border:1px solid var(--border)}
+.sheet label{display:block;font-size:.78rem;color:var(--muted);margin:10px 0 4px}
+.sheet select,.sheet input{width:100%;background:#11141a;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:11px;font-size:.95rem}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);background:var(--ok);color:#04210f;padding:10px 16px;border-radius:24px;font-weight:700;font-size:.85rem;opacity:0;pointer-events:none;transition:opacity .25s;z-index:80;max-width:90%;text-align:center}
+.toast.show{opacity:1}
+.tm{position:fixed;right:12px;bottom:calc(112px + env(safe-area-inset-bottom));z-index:40}
+.tmb{background:var(--accent);color:#fff;border:0;border-radius:28px;padding:11px 15px;font-weight:700;font-size:.85rem;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.tmp{display:none;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:8px;text-align:center}
+.tmp.show{display:block}
+.tmp .big{font-size:1.9rem;font-weight:800}
+.tmp .chips{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.sec h3{margin:16px 0 6px;font-size:.9rem}
+.set{display:flex;flex-direction:column;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>💪 Treino — Jefrei</h1>
+  <div class="sub" id="sub"></div>
+  <div class="stats">
+    <div class="stat">🔥 Dias treinados: <b id="cnt">0</b></div>
+    <div class="stat">📅 Último: <b id="last">—</b></div>
+  </div>
+  <div id="rest"><span>🟠 6 dias de treino concluídos. Reserve o próximo dia para <b>descanso</b>.</span><button class="btn sm sec" id="ack">Ok</button></div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+<main id="main"></main>
+
+<div class="tm">
+  <div class="tmp" id="tmp"><div class="big" id="tmv">00:00</div><div class="chips" id="tmc"></div></div>
+  <button class="tmb" id="tmb">⏱ Descanso</button>
+</div>
+
+<div class="bar">
+  <button class="btn reg" id="reg">✅ Registrar treino realizado</button>
+  <div class="menu" id="menu">
+    <button data-v="treino">Treino</button>
+    <button data-v="hist">Calendário</button>
+    <button data-v="cfg">Ajustes</button>
+  </div>
+</div>
+
+<div class="ov" id="ov"><div class="sheet">
+  <h3 style="margin:0 0 4px">Registrar treino</h3>
+  <label>Data</label><input type="date" id="rdate">
+  <label>Qual treino foi feito?</label><select id="rtab"></select>
+  <div style="display:flex;gap:8px;margin-top:16px"><button class="btn sec" id="rcancel" style="flex:1">Cancelar</button><button class="btn" id="rsave" style="flex:1">Salvar</button></div>
+</div></div>
+<input type="file" id="file" accept="application/json" style="display:none">
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="treino_jefrei_pwa_v1";
+var PLAN={"version": 1, "notes": ["<b>Bi-set:</b> dois exercícios seguidos sem pausa (troca rápida de aparelho), descanso só depois do par. Pares escolhidos entre músculos antagonistas (peito/costas, quadríceps/posterior, bíceps/tríceps) ou que não competem entre si, para manter a carga alta e economizar tempo.", "<b>Rest-pause:</b> usado em apenas 1 bloco por treino, no isolador final do grupo, em substituição ao Myo-reps. Série até 1-2 reps da falha, 15s de pausa, mais reps, 15s, mais reps.", "<b>Duração estimada:</b> 45-55 min por treino (contra cerca de 75 min em séries tradicionais). Compostos pesados nunca vão à falha.", "<b>Frequência:</b> Full Body 3x/semana (Seg/Qua/Sex), mínimo de 1 dia de descanso entre sessões."], "tabs": [{"id": "A", "label": "Treino A", "subtitle": "Full Body — Segunda", "blocks": [{"kind": "biset", "title": "Bi-set 1 — Pernas", "rest": "90s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Leg press 45°", "target": "3x8-10", "load": ""}, {"name": "Mesa flexora", "target": "3x10-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 2 — Peito + Costas", "rest": "75s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Supino inclinado com halteres", "target": "3x8-12", "load": ""}, {"name": "Puxada frente pegada aberta", "target": "3x8-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 3 — Ombro + Panturrilha", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Elevação lateral polia baixa", "target": "3x12-15", "load": ""}, {"name": "Panturrilha sentada", "target": "3x12-15", "load": ""}]}, {"kind": "biset", "title": "Bi-set 4 — Braços", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Rosca direta barra W", "target": "3x10-12", "load": ""}, {"name": "Tríceps corda no pulley", "target": "3x10-12", "load": ""}]}, {"kind": "single", "title": "Finalizador — Core", "rest": "45s entre séries", "note": "", "exercises": [{"name": "Prancha isométrica", "target": "3x30-45s", "load": ""}]}]}, {"id": "B", "label": "Treino B", "subtitle": "Full Body — Quarta", "blocks": [{"kind": "biset", "title": "Bi-set 1 — Posterior + Peito", "rest": "90s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Stiff com halteres", "target": "3x8-10", "load": ""}, {"name": "Supino reto com halteres", "target": "3x8-10", "load": ""}]}, {"kind": "biset", "title": "Bi-set 2 — Costas + Ombro", "rest": "75s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Remada baixa no cabo", "target": "3x10-12", "load": ""}, {"name": "Desenvolvimento com halteres", "target": "3x10-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 3 — Braços", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Rosca martelo com halteres", "target": "3x10-12", "load": ""}, {"name": "Tríceps pulley barra reta", "target": "3x10-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 4 — Quadríceps + Ombro posterior", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries. Na extensora, a 3ª série é em rest-pause.", "exercises": [{"name": "Cadeira extensora", "target": "2x12-15 + 1 rest-pause", "load": ""}, {"name": "Crucifixo invertido no pec deck", "target": "3x12-15", "load": ""}]}, {"kind": "single", "title": "Finalizador — Core", "rest": "45s entre séries", "note": "", "exercises": [{"name": "Abdominal supra na polia", "target": "3x12-15", "load": ""}]}]}, {"id": "C", "label": "Treino C", "subtitle": "Full Body — Sexta", "blocks": [{"kind": "biset", "title": "Bi-set 1 — Pernas + Costas", "rest": "90s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Agachamento sumô no crossover", "target": "3x10-12", "load": ""}, {"name": "Remada unilateral (serrote)", "target": "3x10-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 2 — Peito + Costas", "rest": "75s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Crossover no cabo", "target": "3x12-15", "load": ""}, {"name": "Puxada unilateral polia alta", "target": "3x10-12", "load": ""}]}, {"kind": "biset", "title": "Bi-set 3 — Posterior + Panturrilha", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Cadeira flexora", "target": "3x10-12", "load": ""}, {"name": "Panturrilha no leg press", "target": "3x12-15", "load": ""}]}, {"kind": "biset", "title": "Bi-set 4 — Braços", "rest": "60s após o par", "note": "Faça o 1 e, sem descanso, o 2. Descanse só ao final do par e repita todas as séries.", "exercises": [{"name": "Rosca inclinada com halteres", "target": "3x10-12", "load": ""}, {"name": "Tríceps francês no cabo", "target": "3x10-12", "load": ""}]}, {"kind": "restpause", "title": "Finalizador — Ombros (rest-pause)", "rest": "2 min entre séries", "note": "Rest-pause: série até 1-2 reps da falha, 15s de pausa, +reps, 15s, +reps. Use uma só vez por grupo muscular.", "exercises": [{"name": "Elevação lateral com halteres", "target": "2 séries rest-pause", "load": ""}]}]}]};
+var NOTICE=null;
+
+function uid(){return "x"+Math.random().toString(36).slice(2,10);}
+function $(id){return document.getElementById(id);}
+function pad(n){return String(n).padStart(2,"0");}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function br(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
+function vlink(n){return "https://www.youtube.com/results?search_query="+encodeURIComponent((n||"exercício")+" execução exercício");}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2600);}
+function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+
+function fromPlan(plan,old){
+  var loads={};
+  if(old){old.tabs.forEach(function(t){t.blocks.forEach(function(b){b.exercises.forEach(function(e){if(e.load)loads[e.name.toLowerCase()]=e.load;});});});}
+  var s={planVersion:plan.version,notes:plan.notes||[],tabs:JSON.parse(JSON.stringify(plan.tabs)),
+    activeTab:old?old.activeTab:plan.tabs[0].id,log:old?old.log:[],restAck:old?old.restAck:0,view:"treino",calY:null,calM:null};
+  s.tabs.forEach(function(t){t.blocks.forEach(function(b){b.exercises.forEach(function(e){e.id=uid();e.load=loads[e.name.toLowerCase()]||e.load||"";});});});
+  if(!s.tabs.some(function(t){return t.id===s.activeTab;}))s.activeTab=s.tabs[0].id;
+  return s;
+}
+function load(){
+  var s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  if(!s||!s.tabs||!s.tabs.length)s=fromPlan(PLAN,null);
+  s.log=s.log||[];s.restAck=s.restAck||0;s.view="treino";
+  s.tabs.forEach(function(t){t.blocks=t.blocks||[];t.blocks.forEach(function(b){b.exercises=b.exercises||[];b.exercises.forEach(function(e){if(!e.id)e.id=uid();});});});
+  if(!s.tabs.some(function(t){return t.id===s.activeTab;}))s.activeTab=s.tabs[0].id;
+  return s;
+}
+var S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function tab(){return S.tabs.filter(function(t){return t.id===S.activeTab;})[0];}
+
+/* ---------- cabeçalho ---------- */
+function head(){
+  $("cnt").textContent=S.log.length;
+  var l=S.log.slice().sort(function(a,b){return a.date<b.date?1:-1;})[0];
+  $("last").textContent=l?br(l.date):"—";
+  var n=S.log.length;
+  $("rest").classList.toggle("show",n>0&&n%6===0&&S.restAck<n);
+  $("sub").textContent="Plano v"+S.planVersion+" · "+tab().subtitle;
+  var nav=$("tabs");nav.innerHTML="";
+  S.tabs.forEach(function(t){
+    var b=mk("button",t.id===S.activeTab?"active":"",t.label);
+    b.onclick=function(){S.activeTab=t.id;save();S.view="treino";render();};
+    nav.appendChild(b);
+  });
+  Array.prototype.forEach.call($("menu").children,function(b){b.classList.toggle("active",b.getAttribute("data-v")===S.view);});
+  nav.style.display=S.view==="treino"?"flex":"none";
+}
+
+/* ---------- treino ---------- */
+var KINDS=["single","biset","restpause"],KN={single:"SÉRIE",biset:"BI-SET",restpause:"REST-PAUSE"};
+function viewTreino(m){
+  if(NOTICE){m.appendChild(Object.assign(mk("div","warn"),{innerHTML:NOTICE}));}
+  var d=mk("details","notes");d.appendChild(mk("summary","","ℹ️ Como executar este plano"));
+  (S.notes||[]).forEach(function(n){var p=mk("p");p.innerHTML=n;d.appendChild(p);});
+  m.appendChild(d);
+  var t=tab();
+  t.blocks.forEach(function(b,bi){m.appendChild(blockEl(t,b,bi));});
+  var nb=mk("button","add","+ Novo bloco");
+  nb.onclick=function(){t.blocks.push({kind:"single",title:"Novo bloco",rest:"60-90s",note:"",exercises:[{id:uid(),name:"Novo exercício",target:"3x10-12",load:""}]});save();render();};
+  m.appendChild(nb);
+}
+function blockEl(t,b,bi){
+  var c=mk("div","block");
+  var h=mk("div","bh");
+  var bd=mk("button","badge "+b.kind,KN[b.kind]||"SÉRIE");
+  bd.title="Toque para alternar o tipo";
+  bd.onclick=function(){b.kind=KINDS[(KINDS.indexOf(b.kind)+1)%KINDS.length];save();render();};
+  var ti=mk("input");ti.value=b.title;ti.oninput=function(){b.title=ti.value;save();};
+  var rm=mk("button","ib rm","×");rm.title="Remover bloco";
+  rm.onclick=function(){if(confirm("Remover o bloco \""+b.title+"\"?")){t.blocks.splice(bi,1);save();render();}};
+  h.appendChild(bd);h.appendChild(ti);h.appendChild(rm);c.appendChild(h);
+  var meta=mk("div","bmeta");
+  var ri=mk("input");ri.value=b.rest||"";ri.placeholder="Descanso";ri.oninput=function(){b.rest=ri.value;save();};
+  meta.appendChild(mk("div","","⏱ Descanso:"));meta.appendChild(ri);
+  if(b.note){var nt=mk("div","",b.note);nt.style.marginTop="4px";meta.appendChild(nt);}
+  c.appendChild(meta);
+  var letter=String.fromCharCode(65+bi);
+  b.exercises.forEach(function(e,ei){
+    var r=mk("div","ex");
+    r.appendChild(mk("div","lbl",b.exercises.length>1?letter+(ei+1):"•"));
+    var ni=mk("input","t");ni.value=e.name;
+    var vd=mk("a","ib","🎥");vd.href=vlink(e.name);vd.target="_blank";vd.rel="noopener";vd.title="Ver vídeo";
+    ni.oninput=function(){e.name=ni.value;vd.href=vlink(e.name);save();};
+    r.appendChild(ni);
+    var row=mk("div","row2");
+    var tg=mk("input","t tg");tg.value=e.target;tg.placeholder="séries x reps";tg.oninput=function(){e.target=tg.value;save();};
+    var ld=mk("input","t ld");ld.value=e.load||"";ld.placeholder="kg";ld.setAttribute("inputmode","decimal");ld.oninput=function(){e.load=ld.value;save();};
+    var x=mk("button","ib rm","×");x.title="Remover exercício";
+    x.onclick=function(){if(confirm("Remover \""+e.name+"\"?")){b.exercises.splice(ei,1);save();render();}};
+    row.appendChild(tg);row.appendChild(ld);row.appendChild(vd);row.appendChild(x);
+    r.appendChild(row);c.appendChild(r);
+  });
+  var ad=mk("button","add","+ Exercício neste bloco");
+  ad.onclick=function(){b.exercises.push({id:uid(),name:"Novo exercício",target:"3x10-12",load:""});save();render();};
+  c.appendChild(ad);
+  return c;
+}
+
+/* ---------- calendário ---------- */
+function viewHist(m){
+  var now=new Date();
+  if(S.calY==null){S.calY=now.getFullYear();S.calM=now.getMonth();}
+  var nav=mk("div","li");
+  var pv=mk("button","btn sm sec","◀"),nx=mk("button","btn sm sec","▶");
+  var names=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  var tt=mk("b","",names[S.calM]+" "+S.calY);
+  pv.onclick=function(){S.calM--;if(S.calM<0){S.calM=11;S.calY--;}render();};
+  nx.onclick=function(){S.calM++;if(S.calM>11){S.calM=0;S.calY++;}render();};
+  nav.appendChild(pv);nav.appendChild(tt);nav.appendChild(nx);m.appendChild(nav);
+  var by={};S.log.forEach(function(l){by[l.date]=l;});
+  var g=mk("div","cal");
+  ["D","S","T","Q","Q","S","S"].forEach(function(x){g.appendChild(mk("div","h",x));});
+  var first=new Date(S.calY,S.calM,1).getDay(),dim=new Date(S.calY,S.calM+1,0).getDate(),td=ymd(now);
+  for(var i=0;i<first;i++)g.appendChild(mk("div"));
+  var inMonth=0;
+  for(var d=1;d<=dim;d++){
+    var key=S.calY+"-"+pad(S.calM+1)+"-"+pad(d);
+    var c=mk("div","d"+(by[key]?" on":"")+(key===td?" td":""),String(d));
+    if(by[key]){c.appendChild(mk("small","",by[key].tab));inMonth++;}
+    g.appendChild(c);
+  }
+  m.appendChild(g);
+  var s1=mk("div","li");s1.innerHTML="<span>Treinos no mês</span><b>"+inMonth+"</b>";m.appendChild(s1);
+  var s2=mk("div","li");s2.innerHTML="<span>Total de dias treinados</span><b>"+S.log.length+"</b>";m.appendChild(s2);
+  var faltam=6-(S.log.length%6);
+  var s3=mk("div","li");s3.innerHTML="<span>Treinos até o próximo descanso</span><b>"+(S.log.length%6===0&&S.log.length>0?"agora":faltam)+"</b>";m.appendChild(s3);
+  m.appendChild(mk("h3","","Histórico"));
+  S.log.slice().sort(function(a,b){return a.date<b.date?1:-1;}).slice(0,40).forEach(function(l){
+    var r=mk("div","li");
+    var tl=(S.tabs.filter(function(t){return t.id===l.tab;})[0]||{label:"Treino "+l.tab}).label;
+    r.appendChild(mk("span","",br(l.date)+" — "+tl));
+    var x=mk("button","ib rm","×");
+    x.onclick=function(){if(confirm("Apagar o registro de "+br(l.date)+"?")){S.log=S.log.filter(function(z){return z!==l;});save();render();}};
+    r.appendChild(x);m.appendChild(r);
+  });
+  if(!S.log.length)m.appendChild(mk("div","notes","Nenhum treino registrado ainda. Use o botão verde para registrar."));
+}
+
+/* ---------- ajustes ---------- */
+var deferred=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferred=e;if(S.view==="cfg")render();});
+function viewCfg(m){
+  var w=mk("div","set");
+  var i1=mk("div","notes");i1.innerHTML="<b>Plano atual: v"+S.planVersion+"</b><br>Quando um treino novo for publicado, o app baixa sozinho ao abrir (com internet). Suas cargas são mantidas por nome do exercício.";
+  w.appendChild(i1);
+  var up=mk("button","btn","🔄 Verificar atualização do treino");up.onclick=function(){check(true);};w.appendChild(up);
+  if(deferred){var ins=mk("button","btn sec","📲 Instalar app neste celular");ins.onclick=function(){deferred.prompt();deferred=null;};w.appendChild(ins);}
+  var ex=mk("button","btn sec","⬇️ Exportar backup (.json)");ex.onclick=exportData;w.appendChild(ex);
+  var im=mk("button","btn sec","⬆️ Importar backup (.json)");im.onclick=function(){$("file").click();};w.appendChild(im);
+  var rs=mk("button","btn sec","Restaurar plano original do app");
+  rs.onclick=function(){if(confirm("Voltar ao plano original embutido no app? Registros e cargas são mantidos.")){S=fromPlan(PLAN,S);save();render();toast("Plano restaurado");}};
+  w.appendChild(rs);
+  var zr=mk("button","btn dng","Apagar todo o histórico de treinos");
+  zr.onclick=function(){if(confirm("Apagar TODOS os registros de treino?")){S.log=[];S.restAck=0;save();render();}};
+  w.appendChild(zr);
+  m.appendChild(w);
+}
+function exportData(){
+  var b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  var u=URL.createObjectURL(b),a=document.createElement("a");
+  a.href=u;a.download="treino_jefrei_backup_"+ymd(new Date())+".json";document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(u);},1500);toast("Backup exportado");
+}
+$("file").onchange=function(ev){
+  var f=ev.target.files&&ev.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    try{
+      var o=JSON.parse(e.target.result);
+      if(!o||!Array.isArray(o.tabs))throw new Error("x");
+      if(!confirm("Importar este backup substitui treino, cargas e histórico deste aparelho. Continuar?")){ev.target.value="";return;}
+      o.log=o.log||[];o.restAck=o.restAck||0;
+      o.tabs.forEach(function(t){t.blocks.forEach(function(b){b.exercises.forEach(function(x){if(!x.id)x.id=uid();});});});
+      S=o;S.view="treino";if(!S.activeTab)S.activeTab=S.tabs[0].id;save();render();toast("Backup importado");
+    }catch(err){alert("Arquivo inválido. Use um backup exportado por este app.");}
+    ev.target.value="";
+  };
+  r.readAsText(f);
+};
+
+/* ---------- atualização online ---------- */
+function check(manual){
+  if(location.protocol.indexOf("http")!==0){if(manual)toast("Atualização online só funciona no app instalado/hospedado");return;}
+  fetch("plano.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(p){
+    if(p&&p.tabs&&p.version>S.planVersion){S=fromPlan(p,S);save();render();toast("Treino atualizado para a v"+p.version+" ✅");}
+    else if(manual)toast("Você já está na versão mais recente");
+  }).catch(function(){if(manual)toast("Sem conexão para verificar atualização");});
+}
+
+/* ---------- registro ---------- */
+$("reg").onclick=function(){
+  $("rdate").value=ymd(new Date());
+  var s=$("rtab");s.innerHTML="";
+  S.tabs.forEach(function(t){var o=mk("option","",t.label+" — "+t.subtitle);o.value=t.id;if(t.id===S.activeTab)o.selected=true;s.appendChild(o);});
+  $("ov").classList.add("show");
+};
+$("rcancel").onclick=function(){$("ov").classList.remove("show");};
+$("rsave").onclick=function(){
+  var d=$("rdate").value;if(!d){alert("Escolha a data.");return;}
+  var loads={};tab();S.tabs.forEach(function(t){if(t.id===$("rtab").value)t.blocks.forEach(function(b){b.exercises.forEach(function(e){if(e.load)loads[e.name]=e.load;});});});
+  S.log=S.log.filter(function(l){return l.date!==d;});
+  S.log.push({date:d,tab:$("rtab").value,loads:loads});
+  save();$("ov").classList.remove("show");render();
+  toast("Treino registrado! Total: "+S.log.length+" 💪");
+};
+$("ack").onclick=function(){S.restAck=S.log.length;save();render();toast("Bom descanso 😴");};
+Array.prototype.forEach.call($("menu").children,function(b){b.onclick=function(){S.view=b.getAttribute("data-v");render();};});
+
+/* ---------- cronômetro de descanso ---------- */
+var tmI=null,tmEnd=0;
+function beep(){try{var c=new (window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.2;o.start();setTimeout(function(){o.stop();c.close();},500);}catch(e){}}
+function tick(){
+  var left=Math.max(0,Math.round((tmEnd-Date.now())/1000));
+  $("tmv").textContent=pad(Math.floor(left/60))+":"+pad(left%60);
+  if(left<=0){clearInterval(tmI);tmI=null;beep();if(navigator.vibrate)navigator.vibrate([300,150,300]);$("tmb").textContent="⏱ Descanso";toast("Descanso concluído — próxima série!");}
+}
+function startTimer(sec){clearInterval(tmI);tmEnd=Date.now()+sec*1000;tick();tmI=setInterval(tick,250);$("tmb").textContent="⏱ Em andamento";}
+[45,60,90,120].forEach(function(s){var b=mk("button","btn sm sec",s+"s");b.onclick=function(){startTimer(s);};$("tmc").appendChild(b);});
+var st=mk("button","btn sm dng","Parar");st.onclick=function(){clearInterval(tmI);tmI=null;$("tmv").textContent="00:00";$("tmb").textContent="⏱ Descanso";};$("tmc").appendChild(st);
+$("tmb").onclick=function(){$("tmp").classList.toggle("show");};
+
+/* ---------- render ---------- */
+function render(){
+  head();var m=$("main");m.innerHTML="";
+  if(S.view==="hist")viewHist(m);else if(S.view==="cfg")viewCfg(m);else viewTreino(m);
+  $("reg").style.display=S.view==="treino"?"block":"none";
+}
+if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js").catch(function(){});}
+render();check(false);
+})();
+</script>
+</body>
+</html>
